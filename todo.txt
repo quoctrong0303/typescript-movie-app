@@ -1,0 +1,4 @@
+- tìm kiếm phim
+- lọc theo thể loại phim
+- phim xem gần đây (localStorage)
+- danh sách phim yêu thích (localStorage)
