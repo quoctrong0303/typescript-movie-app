@@ -1,101 +1,129 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { movieAPI } from "./api/movieAPI";
 import "./App.css";
+import Movie from "./components/Movie/Movie";
+import MoviePlayer from "./components/Movie/MoviePlayer";
 import { MovieSlice } from "./components/Movie/movieSlice";
 import { MovieListSlice } from "./components/MovieList/movieListSlice";
+
 import {
-  episode,
-  item,
-  movie,
-  movieResponse,
-  moviesResponse,
-  pagination,
+    item,
+    movie,
+    movieResponse,
+    moviesResponse,
+    pagination,
 } from "./interface";
+import Home from "./pages/Home";
+import Layout from "./pages/Layout";
+import Movies from "./pages/Movies";
 import {
-  EpisodesSelector,
-  MovieSelector,
-  MoviesSelector,
-  PaginationSelector,
+    MovieSelector,
+    MoviesSelector,
+    PaginationSelector,
 } from "./reducers/selectors";
 import { useAppDispatch, useAppSelector } from "./reducers/store";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const movie: movie = useAppSelector(MovieSelector);
-  const movies: item[] = useAppSelector(MoviesSelector);
-  const episodes: episode[] = useAppSelector(EpisodesSelector);
-  const pagination: pagination = useAppSelector(PaginationSelector);
+    const dispatch = useAppDispatch();
+    const movie: movie = useAppSelector(MovieSelector);
+    const movies: item[] = useAppSelector(MoviesSelector);
+    const pagination: pagination = useAppSelector(PaginationSelector);
+    const navigate = useNavigate();
 
-  const [currentUrl, setCurrentUrl] = useState<string>("");
-
-  useEffect(() => {
-    handleLoadMoreMovies();
-  }, []);
-
-  const handleLoadMoreMovies = async () => {
-    //gọi api load movies từ trang hiện tại + 1
-    const moviesRes: moviesResponse = await movieAPI.fetchMovies(
-      pagination.currentPage + 1
+    const [isDarkmode, setIsDarkmode] = useState<boolean>(
+        localStorage.getItem("darkmode")
+            ? JSON.parse(localStorage.getItem("darkmode")!)
+            : false
     );
-    //thêm movies, và ttin phân trang vào global state
-    if (moviesRes.status === true) {
-      dispatch(MovieListSlice.actions.addMovies(moviesRes.items));
-      dispatch(MovieListSlice.actions.setPagination(moviesRes.pagination));
-    }
-  };
 
-  const handleLoadMovie = async (slug: string) => {
-    const movieRes: movieResponse = await movieAPI.fetchMovieBySlug(slug);
-    if (movieRes.status === true) {
-      dispatch(MovieSlice.actions.setMovie(movieRes.movie));
-      dispatch(MovieSlice.actions.setEpisodes(movieRes.episodes));
-      setCurrentUrl(movieRes.episodes[0].server_data[0].link_embed);
-    }
-  };
+    useEffect(() => {
+        handleLoadMoreMovies();
+    }, []);
+    useEffect(() => {
+        movies[0] && handleLoadMovie(movies[0].slug);
+    }, [movies]);
+    const handleLoadMoreMovies = async () => {
+        //gọi api load movies từ trang hiện tại + 1
+        const moviesRes: moviesResponse = await movieAPI.fetchMovies(
+            pagination.currentPage + 1
+        );
+        //thêm movies, và ttin phân trang vào global state
+        if (moviesRes.status === true) {
+            dispatch(MovieListSlice.actions.addMovies(moviesRes.items));
+            dispatch(
+                MovieListSlice.actions.setPagination(moviesRes.pagination)
+            );
+        }
+    };
 
-  const handlePlayMovie = (link_embed: string) => {
-    setCurrentUrl(link_embed);
-  };
+    const handleLoadMovie = async (slug: string) => {
+        if (movie.slug !== slug) {
+            try {
+                const movieRes: movieResponse = await movieAPI.fetchMovieBySlug(
+                    slug
+                );
+                if (movieRes.status === true) {
+                    dispatch(MovieSlice.actions.setMovie(movieRes.movie));
+                    dispatch(MovieSlice.actions.setEpisodes(movieRes.episodes));
+                }
+            } catch (error) {
+                navigate("/danh-sach-phim");
+            }
+        }
+    };
 
-  return (
-    <div className="grid grid-cols-10">
-      <div className="col-span-4">
-        {movies.map((movie) => (
-          <li key={movie._id} onClick={() => handleLoadMovie(movie.slug)}>
-            {movie.name}
-          </li>
-        ))}
-        <div className="flex justify-center">
-          <button
-            className="p-5 bg-blue-500 text-white text-2xl active:scale-105 active:bg-blue-600"
-            onClick={handleLoadMoreMovies}
-          >
-            Load more
-          </button>
-        </div>
-      </div>
-      <div className="col-span-6">
-        <div className="">
-          {episodes.map((episode) => (
-            <div className="flex gap-5">
-              <p>{episode.server_name}</p>
-              <p>
-                {episode.server_data.map((chap) => (
-                  <a
-                    className="p-5"
-                    onClick={() => handlePlayMovie(chap.link_embed)}
-                  >
-                    {chap.name}
-                  </a>
-                ))}
-              </p>
+    return (
+        <div className={isDarkmode ? "dark" : ""}>
+            <div className="font-montserrat text-sm bg-white dark:bg-zinc-900">
+                <div className="flex min-h-screen  2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200 dark:2xl:border-zinc-700 ">
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <Layout
+                                    isDarkmode={isDarkmode}
+                                    setIsDarkmode={setIsDarkmode}
+                                />
+                            }
+                        >
+                            <Route
+                                path="/"
+                                element={
+                                    <Home handleLoadMovie={handleLoadMovie} />
+                                }
+                            />
+                            <Route
+                                path="/danh-sach-phim"
+                                element={
+                                    <Movies
+                                        handleLoadMovie={handleLoadMovie}
+                                        handleLoadMoreMovies={
+                                            handleLoadMoreMovies
+                                        }
+                                    />
+                                }
+                            />
+                            <Route
+                                path="/xem-phim/:slug"
+                                element={
+                                    <Movie handleLoadMovie={handleLoadMovie} />
+                                }
+                            />
+                            <Route
+                                path="/xem-phim/:slug/:episode/:server_name"
+                                element={
+                                    <MoviePlayer
+                                        handleLoadMovie={handleLoadMovie}
+                                    />
+                                }
+                            />
+                        </Route>
+                    </Routes>
+                </div>
             </div>
-          ))}
         </div>
-        <iframe className="w-full h-screen" src={currentUrl}></iframe>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;

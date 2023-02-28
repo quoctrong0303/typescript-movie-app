@@ -6,3 +6,4 @@ export const PaginationSelector = (state: RootState) => state.moviesList.paginat
 
 export const MovieSelector = (state: RootState) => state.movie.movie
 export const EpisodesSelector = (state: RootState) => state.movie.episodes
+export const CurrentUrlSelector = (state: RootState) => state.movie.currentUrl

@@ -1,5 +1,4 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { item } from "../../interface";
 import { MoviesSelector } from "../../reducers/selectors";
 import { useAppSelector } from "../../reducers/store";
@@ -8,20 +7,56 @@ interface Props {
     handleLoadMovie: (slug: string) => Promise<void>;
 }
 
-const MovieList: React.FC<Props> = ({ handleLoadMovie }) => {
+const SlideMovie: React.FC<Props> = ({ handleLoadMovie }) => {
     const movies: item[] = useAppSelector(MoviesSelector);
+    const [activeIndex, setActiveIndex] = useState<number>(0);
+    const [activeMovies, setActiveMovies] = useState<item[]>(
+        movies.slice(activeIndex, activeIndex + 3)
+    );
+    const handlePrevActiveIndex = () => {
+        activeIndex > 0 && setActiveIndex(activeIndex - 1);
+    };
+    const handleNextvActiveIndex = () => {
+        activeIndex < 18 && setActiveIndex(activeIndex + 1);
+    };
 
-    const nagivate = useNavigate();
+    useEffect(() => {
+        setActiveMovies(movies.slice(activeIndex, activeIndex + 3));
+    }, [activeIndex]);
+
+    //Khi movies được cập nhật lại
+    useEffect(() => {
+        setActiveMovies(movies.slice(activeIndex, activeIndex + 3));
+    }, [movies]);
+
     return (
         <section className="mt-9">
             <div className="flex items-center justify-between">
                 <span className="font-semibold text-gray-700 text-base dark:text-white">
-                    Danh sách phim
+                    Phim mới cập nhật
                 </span>
+                <div className="flex items-center space-x-2 fill-gray-500">
+                    <svg
+                        onClick={handlePrevActiveIndex}
+                        className="cursor-pointer h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                    >
+                        <path d="M13.293 6.293L7.58 12l5.7 5.7 1.41-1.42 -4.3-4.3 4.29-4.293Z" />
+                    </svg>
+                    <svg
+                        onClick={handleNextvActiveIndex}
+                        className="cursor-pointer h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                    >
+                        <path d="M10.7 17.707l5.7-5.71 -5.71-5.707L9.27 7.7l4.29 4.293 -4.3 4.29Z" />
+                    </svg>
+                </div>
             </div>
-            <div className="mt-4 grid grid-cols-1 gap-y-5 md:grid-cols-3 lg:grid-cols-4 gap-x-5 ">
-                {movies &&
-                    movies.map((movie) => (
+            <div className="mt-4 grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5 ">
+                {activeMovies &&
+                    activeMovies.map((movie) => (
                         <div
                             key={movie._id}
                             className=" select-none anima flex flex-col rounded-xl overflow-hidden aspect-square border dark:border-zinc-600"
@@ -29,9 +64,7 @@ const MovieList: React.FC<Props> = ({ handleLoadMovie }) => {
                             <img
                                 src={`https://ophim1.cc/_next/image?url=http%3A%2F%2Fimg.ophim1.cc%2Fuploads%2Fmovies%2F${movie.thumb_url}&w=192&q=75`}
                                 className=" h-4/5 object-contain w-full  cursor-pointer"
-                                onClick={() =>
-                                    nagivate(`/xem-phim/${movie.slug}`)
-                                }
+                                onClick={() => handleLoadMovie(movie.slug)}
                             />
                             <div className="w-full h-1/5 bg-white dark:bg-zinc-800 dark:text-white px-3 flex items-center justify-between border-t-2 border-t-red-600">
                                 <span
@@ -80,4 +113,4 @@ const MovieList: React.FC<Props> = ({ handleLoadMovie }) => {
     );
 };
 
-export default MovieList;
+export default SlideMovie;

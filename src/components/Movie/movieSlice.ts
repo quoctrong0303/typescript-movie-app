@@ -1,9 +1,10 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { episode, movie } from "../../interface";
 
 interface MovieState {
     movie: movie,
-    episodes: episode[]
+    episodes: episode[],
+    currentUrl: string
 }
 
 const initialState: MovieState = {
@@ -37,7 +38,8 @@ const initialState: MovieState = {
         category: [],
         country: [],
     },
-    episodes: []
+    episodes: [],
+    currentUrl: ''
 }
 
 
@@ -50,6 +52,9 @@ export const MovieSlice = createSlice({
         },
         setEpisodes: (state, action: PayloadAction<episode[]>) => {
             state.episodes = action.payload;
+        }
+        ,setCurrentUrl: (state, action: PayloadAction<string>) => {
+            state.currentUrl = action.payload;
         }
     }
 })
