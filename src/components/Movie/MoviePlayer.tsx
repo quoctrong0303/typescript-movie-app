@@ -69,6 +69,7 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
             <Header />
             <div className="md:h-[500px] h-[300px] lg:h-[600px] w-full">
                 <iframe
+                    allowFullScreen={true}
                     className="h-full w-full"
                     title="Phim"
                     src={currentUrl}
