@@ -43,7 +43,7 @@ const Movie: React.FC<Props> = ({ handleLoadMovie }) => {
                     <div className="flex-1">
                         <div className="flex gap-5 p-5 text-md font-semibold border-t-2 dark:border-t-black first:border-none">
                             <h4 className="">Thể loại</h4>
-                            <p className="flex-1 text-center flex flex-wrap gap-1">
+                            <p className="flex-1 text-center justify-center flex flex-wrap gap-1">
                                 {movie.category.map((cat, index) => (
                                     <span
                                         key={index}

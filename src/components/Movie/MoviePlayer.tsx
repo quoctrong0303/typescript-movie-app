@@ -76,11 +76,12 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
                 ></iframe>
             </div>
             <div className="gap-2 mt-3 font-montserrat text-lg dark:text-[#a7a7a7] font-semibold text-gray-600">
+                <h3 className="p-3">{movie.name}</h3>
                 <div className=" dark:bg-[#3a3a3a] ">
-                    <h3 className="p-3 border-b border-dashed">
+                    <h4 className="p-3 border-b border-dashed text-sm">
                         Danh sách tập
-                    </h3>
-                    <div className="max-h-[300px] text-sm p-3 overflow-auto">
+                    </h4>
+                    <div className="max-h-[300px] text-xxs p-3 overflow-auto">
                         {episodes.map((episode, index) => (
                             <div
                                 className="flex gap-2 my-2 items-center"
