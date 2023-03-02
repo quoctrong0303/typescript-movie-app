@@ -1,13 +1,17 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { item, pagination } from "../../interface";
 
 interface MoviesListState {
     movies: item[],
+    favouriteMovies: item[],
+    recentlyMovies: item[],
     pagination: pagination
 }
 
 const initialState:MoviesListState = {
     movies: [],
+    favouriteMovies: JSON.parse(localStorage.getItem("favouriteMovies")!) || [],
+    recentlyMovies: JSON.parse(localStorage.getItem("recentlyMovies")!) || [],
     pagination: {
         totalItems: 0,
         totalItemsPerPage: 0,
@@ -33,6 +37,26 @@ export const MovieListSlice = createSlice({
         },
         setPagination: (state, action:PayloadAction<pagination>) => {
             state.pagination = action.payload;
+        },
+        addMovieToRecently: (state, action:PayloadAction<item>) => {
+            if(!state.recentlyMovies.some((movie) => movie._id === action.payload._id)) {
+                state.recentlyMovies.push(action.payload);
+            }
+            
+
+        },
+        addMovieToFavourite: (state, action:PayloadAction<item>) => {
+            if(!state.favouriteMovies.some((movie) => movie._id === action.payload._id)) {
+                state.favouriteMovies.push(action.payload);
+            }
+            
+            
+
+        },
+        removeMovieFromFavouriteById: (state, action:PayloadAction<string>) => {
+          const removedListMovies:item[] = state.favouriteMovies.filter((item) => item._id !== action.payload);
+          state.favouriteMovies = removedListMovies;
+
         }
     }
 })

@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../../components/Header/Header";
 import MovieList from "../../components/MovieList/MovieList";
-import SearchInput from "../../components/RightSidebar/SearchInput";
 
 interface Props {
     handleLoadMovie: (slug: string) => Promise<void>;
@@ -13,7 +12,7 @@ const Movies: React.FC<Props> = ({ handleLoadMovie, handleLoadMoreMovies }) => {
         <>
             <main className="flex-1 py-10  px-5 sm:px-10">
                 <Header />
-                <SearchInput />
+                {/* <SearchInput /> */}
                 <MovieList handleLoadMovie={handleLoadMovie} />
                 <div className="flex justify-center">
                     <button

@@ -107,9 +107,6 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
                                                         setCurrentEpisode(
                                                             "tap-" + data.slug
                                                         );
-                                                        console.log(
-                                                            currentEpisode
-                                                        );
                                                     }}
                                                     className="hover:bg-red-600 dark:hover:bg-red-600 hover:text-white flex items-center w-10 h-10 justify-center bg-gray-200 dark:bg-[#191919]"
                                                 >

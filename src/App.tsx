@@ -104,12 +104,14 @@ function App() {
                                     />
                                 }
                             />
+
                             <Route
                                 path="/xem-phim/:slug"
                                 element={
                                     <Movie handleLoadMovie={handleLoadMovie} />
                                 }
                             />
+
                             <Route
                                 path="/xem-phim/:slug/:episode/:server_name"
                                 element={

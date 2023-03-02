@@ -37,7 +37,10 @@ const MovieList: React.FC<Props> = ({ handleLoadMovie }) => {
                                 <span
                                     className="capitalize  font-medium truncate cursor-pointer active:text-red-600"
                                     title={movie.origin_name}
-                                    onClick={() => handleLoadMovie(movie.slug)}
+                                    onClick={() => {
+                                        handleLoadMovie(movie.slug);
+                                        nagivate(`/xem-phim/${movie.slug}`);
+                                    }}
                                 >
                                     {movie.name} ({movie.origin_name})
                                 </span>

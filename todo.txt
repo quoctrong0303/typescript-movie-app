@@ -1,4 +1,4 @@
-- tìm kiếm phim
+- tìm kiếm phim (useParams to get keyword and call api from ophim to get list items)
 - lọc theo thể loại phim
 - phim xem gần đây (localStorage)
 - danh sách phim yêu thích (localStorage)

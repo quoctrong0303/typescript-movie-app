@@ -1,5 +1,4 @@
 import axios from "axios";
-import { redirect } from "react-router-dom";
 
 const baseURL = 'https://ophim1.com';
 
@@ -20,7 +19,7 @@ export const movieAPI = {
             const {data} = await axios.get(baseURL + `/phim/${slug}`);
             return data;
         } catch (error) {
-            redirect('/');
+            
             
         }
     }

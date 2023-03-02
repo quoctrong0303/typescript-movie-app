@@ -4,7 +4,6 @@ import { episode, movie } from "../../interface";
 import { EpisodesSelector, MovieSelector } from "../../reducers/selectors";
 import { useAppSelector } from "../../reducers/store";
 import Header from "../Header/Header";
-import SearchInput from "../RightSidebar/SearchInput";
 
 interface Props {
     handleLoadMovie: (slug: string) => Promise<void>;
@@ -20,7 +19,7 @@ const Movie: React.FC<Props> = ({ handleLoadMovie }) => {
     return (
         <main className="flex-1 py-10  px-5 sm:px-10">
             <Header />
-            <SearchInput />
+            {/* <SearchInput /> */}
             <div className="w-full  mt-5 font-montserrat dark:bg-[#191919] border-t-2 dark:border-[#3a3a3a]">
                 <h3 className="text-xl dark:text-white font-semibold text-center p-2 text-gray-600">
                     {movie.name}

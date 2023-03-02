@@ -16,6 +16,6 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 //định nghĩa hàm useAppDispatch kiểu dữ liệu trả về là AppDispatch, sử dụng hàm có sẵn useDispatch (tạo hàm mới nhưng chức năng giông hàm useDispatch)
 export const useAppDispatch: () => AppDispatch = useDispatch
-//định nghĩa useAppSelector kiểu dữ liệu trả về là TypedUseSelectorHook<RootState>,  sử dụng hàm có sẵn useSelector (tạo hàm mới nhưng chức năng giông hàm useSelector)
+//định nghĩa useAppSelector có type là TypedUseSelectorHook<RootState>,  sử dụng hàm có sẵn useSelector (tạo hàm mới nhưng chức năng giông hàm useSelector)
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
