@@ -5,9 +5,11 @@ import {
     CurrentUrlSelector,
     EpisodesSelector,
     MovieSelector,
+    RecentlyMoviesSelector,
 } from "../../reducers/selectors";
 import { useAppDispatch, useAppSelector } from "../../reducers/store";
 import Header from "../Header/Header";
+import { MovieListSlice } from "../MovieList/movieListSlice";
 import { MovieSlice } from "./movieSlice";
 
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
+    const recentlyMovies = useAppSelector(RecentlyMoviesSelector);
     const params = useParams();
     const dispatch = useAppDispatch();
     const currentUrl = useAppSelector(CurrentUrlSelector);
@@ -64,6 +67,10 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
             }
         }
     }, [movie, currentEpisode]);
+
+    useEffect(() => {
+        localStorage.setItem("recentlyMovies", JSON.stringify(recentlyMovies));
+    }, [recentlyMovies]);
     return (
         <main className="flex-1 py-10 px-5 sm:px-10">
             <Header />
@@ -106,6 +113,12 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
                                                     onClick={() => {
                                                         setCurrentEpisode(
                                                             "tap-" + data.slug
+                                                        );
+                                                        //
+                                                        dispatch(
+                                                            MovieListSlice.actions.addMovieToRecently(
+                                                                movie
+                                                            )
                                                         );
                                                     }}
                                                     className="hover:bg-red-600 dark:hover:bg-red-600 hover:text-white flex items-center w-10 h-10 justify-center bg-gray-200 dark:bg-[#191919]"

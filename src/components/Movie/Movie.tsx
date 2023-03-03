@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { episode, movie } from "../../interface";
 import { EpisodesSelector, MovieSelector } from "../../reducers/selectors";
-import { useAppSelector } from "../../reducers/store";
+import { useAppDispatch, useAppSelector } from "../../reducers/store";
 import Header from "../Header/Header";
+import { MovieListSlice } from "../MovieList/movieListSlice";
 
 interface Props {
     handleLoadMovie: (slug: string) => Promise<void>;
@@ -12,6 +13,8 @@ interface Props {
 const Movie: React.FC<Props> = ({ handleLoadMovie }) => {
     const movie: movie = useAppSelector(MovieSelector);
     const episodes: episode[] = useAppSelector(EpisodesSelector);
+    const dispatch = useAppDispatch();
+
     const params = useParams();
     useEffect(() => {
         handleLoadMovie(params.slug!);
@@ -86,6 +89,14 @@ const Movie: React.FC<Props> = ({ handleLoadMovie }) => {
                                             (data) =>
                                                 data.name && (
                                                     <Link
+                                                        onClick={() => {
+                                                            //
+                                                            dispatch(
+                                                                MovieListSlice.actions.addMovieToRecently(
+                                                                    movie
+                                                                )
+                                                            );
+                                                        }}
                                                         key={data.name}
                                                         to={
                                                             "/xem-phim/" +

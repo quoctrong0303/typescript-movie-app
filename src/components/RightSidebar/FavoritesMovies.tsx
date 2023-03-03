@@ -5,7 +5,7 @@ import { useAppSelector } from "../../reducers/store";
 
 const FavoritesMovies: React.FC = () => {
     const favouriteMovies = useAppSelector(FavouriteMoviesSelector);
-    const slicedMovies = favouriteMovies.slice(0, 3);
+    const slicedMovies = favouriteMovies.slice(-3).reverse();
     const navigate = useNavigate();
     return (
         <div className="mt-10">
@@ -15,7 +15,7 @@ const FavoritesMovies: React.FC = () => {
             <ul className="mt-4 text-gray-400 text-xs space-y-3">
                 {favouriteMovies &&
                     slicedMovies.map((movie) => (
-                        <li className="flex space-x-3 ">
+                        <li className="flex space-x-3 " key={movie._id}>
                             <img
                                 onClick={() =>
                                     navigate("/xem-phim/" + movie.slug)
