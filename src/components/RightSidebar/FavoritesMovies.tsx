@@ -17,6 +17,7 @@ const FavoritesMovies: React.FC = () => {
                     slicedMovies.map((movie) => (
                         <li className="flex space-x-3 " key={movie._id}>
                             <img
+                                crossOrigin="anonymous"
                                 onClick={() =>
                                     navigate("/xem-phim/" + movie.slug)
                                 }

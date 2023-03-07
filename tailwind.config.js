@@ -2,7 +2,10 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
     darkMode: "class",
-    content: ["./src/**/*.{js,jsx,ts,tsx}"],
+    content: [
+        "./src/**/*.{js,jsx,ts,tsx}",
+        "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    ],
     theme: {
         screens: {
             xs: "350px",
@@ -28,5 +31,5 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [require("flowbite/plugin")],
 };

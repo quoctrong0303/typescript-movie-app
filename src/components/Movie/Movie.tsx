@@ -4,6 +4,7 @@ import { episode, movie } from "../../interface";
 import { EpisodesSelector, MovieSelector } from "../../reducers/selectors";
 import { useAppDispatch, useAppSelector } from "../../reducers/store";
 import Header from "../Header/Header";
+import TrailerModal from "../Modals/TrailerModal";
 import { MovieListSlice } from "../MovieList/movieListSlice";
 
 interface Props {
@@ -29,18 +30,12 @@ const Movie: React.FC<Props> = ({ handleLoadMovie }) => {
                 </h3>
                 <div className="relative flex items-center gap-5 dark:bg-[#3a3a3a] dark:text-[#a7a7a7] p-1">
                     <img
+                        crossOrigin="anonymous"
                         src={movie.thumb_url}
                         className="object-contain border-4 border-gray-400 dark:border-black h-[250px]"
                     />
                     <div className="absolute  bottom-0">
-                        {movie.trailer_url && (
-                            <button
-                                type="button"
-                                className="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium text-sm px-3 py-1.5 ml-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                            >
-                                Trailer
-                            </button>
-                        )}
+                        {movie.trailer_url && <TrailerModal movie={movie} />}
                     </div>
                     <div className="flex-1">
                         <div className="flex gap-5 p-5 text-md font-semibold border-t-2 dark:border-t-black first:border-none">

@@ -15,7 +15,7 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className=" font-bold text-lg flex items-center  gap-x-3 md:hidden mb-12 ">
+            <header className=" font-bold text-lg flex items-center  gap-x-3 md:hidden mb-12">
                 <span className="mr-6">
                     <svg
                         onClick={handleToggleMenuMobile}
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
             </header>
             <div
                 ref={refMenuMobile}
-                className="bg-white/95 mt-12 hidden fixed lg:hidden right-0 left-0 bottom-0 top-10 dark:bg-zinc-900/95 z-100 items-center flex  flex-col gap-y-4 text-gray-500 fill-gray-500 text-sm"
+                className="bg-white/95 mt-12 z-20 hidden fixed lg:hidden right-0 left-0 bottom-0 top-10 dark:bg-zinc-900/95 z-100 items-center flex  flex-col gap-y-4 text-gray-500 fill-gray-500 text-sm"
             >
                 <NavLink to="/" className={navLinkClass}>
                     <svg

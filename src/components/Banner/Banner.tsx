@@ -44,13 +44,13 @@ const Banner: React.FC = () => {
                     Hoạt hình
                 </a>
             </nav> */}
-            <div
-                className="flex flex-col justify-between mt-4 bg-black/10 bg-blend-multiply rounded-3xl h-80 overflow-hidden bg-cover bg-center px-7 pt-4 pb-6 text-white"
-                style={{
-                    backgroundImage: `url(${movie.poster_url})`,
-                }}
-            >
-                <div className="bg-gradient-to-r from-black/30 to-transparent -mx-7 -mb-6 px-7 pb-6 pt-2">
+            <div className="relative flex flex-col justify-between mt-4 bg-black/10 bg-blend-multiply rounded-3xl h-80 overflow-hidden bg-cover bg-center px-7 pt-4 pb-6 text-white">
+                <img
+                    crossOrigin="anonymous"
+                    src={movie.poster_url}
+                    className="absolute opacity-30 w-full h-full"
+                />
+                <div className="bg-gradient-to-r from-black/30 to-transparent -mx-7 -mb-6 px-7 pb-6 pt-2 z-10">
                     <span className="uppercase text-3xl font-semibold">
                         {movie.name}
                     </span>

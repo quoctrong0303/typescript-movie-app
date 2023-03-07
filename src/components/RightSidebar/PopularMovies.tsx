@@ -12,8 +12,9 @@ const PopularMovie: React.FC = () => {
             <ul className="mt-4 text-gray-400 text-xs space-y-3">
                 {recentlyMovies &&
                     SlicedMovies.map((mv) => (
-                        <li className="flex space-y-3 space-x-3 ">
+                        <li className="flex space-y-3 space-x-3 " key={mv._id}>
                             <img
+                                crossOrigin="anonymous"
                                 src={mv.thumb_url}
                                 className="w-1/3 rounded-md"
                             />
