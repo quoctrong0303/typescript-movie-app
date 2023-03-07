@@ -6,10 +6,13 @@ import SlideMovie from "../../components/SlideMovie/SlideMovie";
 
 interface Props {
     handleLoadMovie: (slug: string) => Promise<void>;
+    isLoading: boolean;
 }
 
-const Home: React.FC<Props> = ({ handleLoadMovie }) => {
-    return (
+const Home: React.FC<Props> = ({ handleLoadMovie, isLoading }) => {
+    return isLoading ? (
+        <p>Loading...</p>
+    ) : (
         <>
             <main className="flex-1 py-10  px-5 sm:px-10">
                 <Header />

@@ -36,6 +36,7 @@ function App() {
             ? JSON.parse(localStorage.getItem("darkmode")!)
             : false
     );
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         handleLoadMoreMovies();
@@ -48,12 +49,14 @@ function App() {
         const moviesRes: moviesResponse = await movieAPI.fetchMovies(
             pagination.currentPage + 1
         );
+        setIsLoading(true);
         //thêm movies, và ttin phân trang vào global state
         if (moviesRes.status === true) {
             dispatch(MovieListSlice.actions.addMovies(moviesRes.items));
             dispatch(
                 MovieListSlice.actions.setPagination(moviesRes.pagination)
             );
+            setIsLoading(false);
         }
     };
 
@@ -63,11 +66,16 @@ function App() {
                 const movieRes: movieResponse = await movieAPI.fetchMovieBySlug(
                     slug
                 );
+                setIsLoading(true);
+
                 if (movieRes.status === true) {
+                    setIsLoading(false);
+
                     dispatch(MovieSlice.actions.setMovie(movieRes.movie));
                     dispatch(MovieSlice.actions.setEpisodes(movieRes.episodes));
                 }
             } catch (error) {
+                setIsLoading(false);
                 navigate("/danh-sach-phim");
             }
         }
@@ -90,13 +98,17 @@ function App() {
                             <Route
                                 path="/"
                                 element={
-                                    <Home handleLoadMovie={handleLoadMovie} />
+                                    <Home
+                                        handleLoadMovie={handleLoadMovie}
+                                        isLoading={isLoading}
+                                    />
                                 }
                             />
                             <Route
                                 path="/danh-sach-phim"
                                 element={
                                     <Movies
+                                        isLoading={isLoading}
                                         handleLoadMovie={handleLoadMovie}
                                         handleLoadMoreMovies={
                                             handleLoadMoreMovies
