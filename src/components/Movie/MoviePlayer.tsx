@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { episode, movie, server_data } from "../../interface";
 import {
     CurrentUrlSelector,
@@ -71,6 +71,13 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
     useEffect(() => {
         localStorage.setItem("recentlyMovies", JSON.stringify(recentlyMovies));
     }, [recentlyMovies]);
+
+    //in React-Router-Dom V6 supported this function to handle class active
+    const navLinkClass = ({ isActive }: { isActive: boolean }) => {
+        return isActive
+            ? "bg-red-600 text-white flex items-center w-10 h-10 justify-center"
+            : "hover:bg-red-600 dark:hover:bg-red-600 hover:text-white flex items-center w-10 h-10 justify-center bg-gray-200 dark:bg-[#191919]";
+    };
     return (
         <main className="flex-1 py-10 px-5 sm:px-10">
             <Header />
@@ -99,7 +106,7 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
                                     {episode.server_data.map(
                                         (data) =>
                                             data.name && (
-                                                <Link
+                                                <NavLink
                                                     key={data.name}
                                                     to={
                                                         "/xem-phim/" +
@@ -121,10 +128,10 @@ const MoviePlayer: React.FC<Props> = ({ handleLoadMovie }) => {
                                                             )
                                                         );
                                                     }}
-                                                    className="hover:bg-red-600 dark:hover:bg-red-600 hover:text-white flex items-center w-10 h-10 justify-center bg-gray-200 dark:bg-[#191919]"
+                                                    className={navLinkClass}
                                                 >
                                                     <p>{data.name}</p>
-                                                </Link>
+                                                </NavLink>
                                             )
                                     )}
                                 </div>

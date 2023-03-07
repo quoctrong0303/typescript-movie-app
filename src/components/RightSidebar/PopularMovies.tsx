@@ -1,9 +1,11 @@
+import { Link, useNavigate } from "react-router-dom";
 import { RecentlyMoviesSelector } from "../../reducers/selectors";
 import { useAppSelector } from "../../reducers/store";
 
 const PopularMovie: React.FC = () => {
     const recentlyMovies = useAppSelector(RecentlyMoviesSelector);
     const SlicedMovies = recentlyMovies.slice(-3).reverse();
+    const navigate = useNavigate();
     return (
         <div className="mt-10">
             <span className="font-semibold text-gray-700 dark:text-white">
@@ -17,12 +19,16 @@ const PopularMovie: React.FC = () => {
                                 crossOrigin="anonymous"
                                 src={mv.thumb_url}
                                 className="w-1/3 rounded-md"
+                                onClick={() => navigate("/xem-phim/" + mv.slug)}
                             />
                             <div className="flex flex-col justify-between  ">
                                 <div className="flex flex-col space-y-1">
-                                    <span className="text-gray-700 dark:text-white font-semibold">
+                                    <Link
+                                        to={"/xem-phim/" + mv.slug}
+                                        className="text-gray-700 dark:text-white font-semibold"
+                                    >
                                         {mv.name}
-                                    </span>
+                                    </Link>
                                 </div>
                                 <div className="flex space-x-2 items-center">
                                     <svg
@@ -60,12 +66,12 @@ const PopularMovie: React.FC = () => {
                     ))}
 
                 <li className="pt-1">
-                    <a
-                        href="#"
+                    <Link
+                        to="/danh-sach-phim/gan-day"
                         className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white"
                     >
                         Xem thêm
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </div>
