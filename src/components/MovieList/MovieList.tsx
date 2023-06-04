@@ -28,7 +28,7 @@ const MovieList: React.FC<Props> = ({ handleLoadMovie }) => {
                         >
                             <img
                                 crossOrigin="anonymous"
-                                src={`${movie.poster_url}`}
+                                src={`https://img.ophim1.com/uploads/movies/${movie.poster_url}`}
                                 className=" h-4/5 object-contain w-full  cursor-pointer"
                                 onClick={() =>
                                     nagivate(`/xem-phim/${movie.slug}`)
