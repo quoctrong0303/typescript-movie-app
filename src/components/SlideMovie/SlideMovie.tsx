@@ -63,7 +63,7 @@ const SlideMovie: React.FC<Props> = ({ handleLoadMovie }) => {
                         >
                             <img
                                 crossOrigin="anonymous"
-                                src={`${movie.thumb_url}`}
+                                src={`${movie.poster_url}`}
                                 className=" h-4/5 object-contain w-full  cursor-pointer"
                                 onClick={() => handleLoadMovie(movie.slug)}
                             />
