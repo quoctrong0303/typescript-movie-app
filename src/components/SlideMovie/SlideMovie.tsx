@@ -62,6 +62,7 @@ const SlideMovie: React.FC<Props> = ({ handleLoadMovie }) => {
                             className=" select-none anima flex flex-col rounded-xl overflow-hidden aspect-square border dark:border-zinc-600"
                         >
                             <img
+                                crossOrigin="anonymous"
                                 src={`https://ophim1.cc/_next/image?url=http%3A%2F%2Fimg.ophim1.cc%2Fuploads%2Fmovies%2F${movie.thumb_url}&w=192&q=75`}
                                 className=" h-4/5 object-contain w-full  cursor-pointer"
                                 onClick={() => handleLoadMovie(movie.slug)}
